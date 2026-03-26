@@ -12,94 +12,218 @@
     <link rel="canonical" href="https://movietrailermakers.com/">
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif; color: #e0e0e0; background: #0a0a0a; line-height: 1.6; }
-        a { color: #e74c3c; text-decoration: none; }
-        a:hover { text-decoration: underline; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif; color: #d4d4d8; background: #0a0a0a; line-height: 1.7; }
+        a { color: #a78bfa; text-decoration: none; }
+        a:hover { color: #c4b5fd; text-decoration: none; }
 
         /* Nav */
-        nav { background: #111; padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #e74c3c; position: sticky; top: 0; z-index: 100; }
-        .logo { font-size: 1.5rem; font-weight: 700; color: #fff; }
-        .logo span { color: #e74c3c; }
-        nav ul { list-style: none; display: flex; gap: 1.5rem; }
-        nav ul a { color: #ccc; font-size: 0.95rem; }
-        nav ul a:hover { color: #e74c3c; text-decoration: none; }
+        nav { background: rgba(10,10,10,0.95); backdrop-filter: blur(12px); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(124,58,237,0.3); position: sticky; top: 0; z-index: 100; height: 70px; }
+        .logo { font-size: 1.4rem; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
+        .logo span { color: #a78bfa; }
+        .nav-links { list-style: none; display: flex; gap: 1.5rem; align-items: center; }
+        .nav-links a { color: #a1a1aa; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+        .nav-links a:hover { color: #fff; }
+        .nav-cta { background: #7c3aed; color: #fff !important; padding: 0.55rem 1.3rem; border-radius: 8px; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.5px; text-transform: uppercase; box-shadow: 0 0 20px rgba(124,58,237,0.4), 0 0 60px rgba(124,58,237,0.15); transition: all 0.3s; animation: navGlow 3s ease-in-out infinite; }
+        .nav-cta:hover { background: #6d28d9; box-shadow: 0 0 30px rgba(124,58,237,0.6), 0 0 80px rgba(124,58,237,0.25); transform: translateY(-1px); }
+        @keyframes navGlow { 0%, 100% { box-shadow: 0 0 20px rgba(124,58,237,0.4), 0 0 60px rgba(124,58,237,0.15); } 50% { box-shadow: 0 0 25px rgba(124,58,237,0.55), 0 0 70px rgba(124,58,237,0.25); } }
+
+        /* Mobile nav */
+        .nav-toggle { display: none; background: none; border: none; color: #fff; font-size: 1.6rem; cursor: pointer; padding: 0.25rem; }
 
         /* Hero */
-        .hero { text-align: center; padding: 5rem 2rem 4rem; background: linear-gradient(135deg, #111 0%, #1a1a2e 100%); }
-        .hero h1 { font-size: 2.8rem; color: #fff; margin-bottom: 1rem; }
-        .hero h1 span { color: #e74c3c; }
-        .hero p { font-size: 1.2rem; max-width: 700px; margin: 0 auto 2rem; color: #bbb; }
-        .btn { display: inline-block; background: #e74c3c; color: #fff; padding: 0.85rem 2rem; border-radius: 6px; font-weight: 600; font-size: 1.05rem; transition: background 0.2s; }
-        .btn:hover { background: #c0392b; text-decoration: none; }
+        .hero { text-align: center; padding: 7rem 2rem 6rem; background: radial-gradient(ellipse at 50% 0%, rgba(124,58,237,0.15) 0%, transparent 60%), radial-gradient(ellipse at 80% 50%, rgba(139,92,246,0.08) 0%, transparent 50%), linear-gradient(180deg, #0a0a0a 0%, #111 100%); position: relative; overflow: hidden; }
+        .hero::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(124,58,237,0.03) 90deg, transparent 180deg, rgba(139,92,246,0.03) 270deg, transparent 360deg); animation: heroSpin 30s linear infinite; }
+        @keyframes heroSpin { to { transform: rotate(360deg); } }
+        .hero-content { position: relative; z-index: 1; }
+        .hero-tag { display: inline-block; background: rgba(124,58,237,0.15); border: 1px solid rgba(124,58,237,0.3); color: #a78bfa; padding: 0.4rem 1.2rem; border-radius: 100px; font-size: 0.8rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 1.5rem; }
+        .hero h1 { font-size: 3.8rem; color: #fff; margin-bottom: 1.5rem; font-weight: 900; letter-spacing: -1.5px; line-height: 1.1; max-width: 900px; margin-left: auto; margin-right: auto; }
+        .hero h1 .highlight { background: linear-gradient(135deg, #7c3aed, #a78bfa, #c4b5fd); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .hero p { font-size: 1.25rem; max-width: 650px; margin: 0 auto 2.5rem; color: #a1a1aa; line-height: 1.7; }
+        .hero-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+        /* Buttons */
+        .btn-primary { display: inline-block; background: #7c3aed; color: #fff; padding: 1rem 2.5rem; border-radius: 10px; font-weight: 800; font-size: 1.1rem; letter-spacing: 0.5px; text-transform: uppercase; transition: all 0.3s; box-shadow: 0 0 30px rgba(124,58,237,0.3), 0 4px 15px rgba(0,0,0,0.3); }
+        .btn-primary:hover { background: #6d28d9; transform: translateY(-2px); box-shadow: 0 0 40px rgba(124,58,237,0.5), 0 8px 25px rgba(0,0,0,0.3); color: #fff; }
+        .btn-outline { display: inline-block; background: transparent; color: #a78bfa; padding: 1rem 2.5rem; border-radius: 10px; font-weight: 700; font-size: 1.1rem; border: 2px solid rgba(124,58,237,0.5); transition: all 0.3s; }
+        .btn-outline:hover { border-color: #7c3aed; background: rgba(124,58,237,0.1); color: #c4b5fd; transform: translateY(-2px); }
+
+        /* Stats bar */
+        .stats-bar { background: #111; border-top: 1px solid rgba(124,58,237,0.15); border-bottom: 1px solid rgba(124,58,237,0.15); padding: 2.5rem 2rem; }
+        .stats-inner { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; text-align: center; }
+        .stat-item .stat-num { font-size: 2.2rem; font-weight: 900; color: #7c3aed; letter-spacing: -1px; }
+        .stat-item .stat-label { font-size: 0.85rem; color: #71717a; text-transform: uppercase; letter-spacing: 1px; margin-top: 0.25rem; }
+
+        /* CTA Sections */
+        .cta-section { padding: 5rem 2rem; text-align: center; position: relative; }
+        .cta-section.has-bg { background: radial-gradient(ellipse at 50% 50%, rgba(124,58,237,0.08) 0%, transparent 70%); }
+        .cta-section h2 { font-size: 2.8rem; color: #fff; font-weight: 900; letter-spacing: -1px; margin-bottom: 1rem; line-height: 1.15; }
+        .cta-section h2 .highlight { background: linear-gradient(135deg, #7c3aed, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .cta-section p { color: #a1a1aa; font-size: 1.15rem; max-width: 600px; margin: 0 auto 2rem; }
+        .cta-divider { width: 60px; height: 3px; background: linear-gradient(90deg, #7c3aed, #a78bfa); margin: 0 auto 1.5rem; border-radius: 2px; }
 
         /* Articles Grid */
-        .section { padding: 4rem 2rem; max-width: 1100px; margin: 0 auto; }
-        .section h2 { font-size: 2rem; color: #fff; text-align: center; margin-bottom: 2.5rem; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
-        .card { background: #161616; border: 1px solid #222; border-radius: 10px; padding: 1.8rem; transition: transform 0.2s, border-color 0.2s; }
-        .card:hover { transform: translateY(-4px); border-color: #e74c3c; }
-        .card h3 { font-size: 1.15rem; color: #fff; margin-bottom: 0.6rem; }
-        .card h3 a { color: #fff; }
-        .card h3 a:hover { color: #e74c3c; text-decoration: none; }
-        .card p { font-size: 0.92rem; color: #999; margin-bottom: 1rem; }
-        .card .read-more { color: #e74c3c; font-weight: 600; font-size: 0.9rem; }
+        .section { padding: 5rem 2rem; max-width: 1100px; margin: 0 auto; }
+        .section-header { text-align: center; margin-bottom: 3rem; }
+        .section-header h2 { font-size: 2.4rem; color: #fff; font-weight: 900; letter-spacing: -0.5px; margin-bottom: 0.75rem; }
+        .section-header p { color: #71717a; font-size: 1.05rem; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.25rem; }
+        .card { background: linear-gradient(135deg, #18181b 0%, #1c1c22 100%); border: 1px solid #27272a; border-radius: 14px; padding: 2rem; transition: all 0.3s; position: relative; overflow: hidden; }
+        .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #7c3aed, transparent); opacity: 0; transition: opacity 0.3s; }
+        .card:hover { transform: translateY(-5px); border-color: rgba(124,58,237,0.4); box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 30px rgba(124,58,237,0.08); }
+        .card:hover::before { opacity: 1; }
+        .card-number { font-size: 0.7rem; font-weight: 700; color: #7c3aed; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 0.75rem; }
+        .card h3 { font-size: 1.15rem; color: #fff; margin-bottom: 0.75rem; font-weight: 700; line-height: 1.4; }
+        .card h3 a { color: #fff; transition: color 0.2s; }
+        .card h3 a:hover { color: #a78bfa; }
+        .card p { font-size: 0.9rem; color: #71717a; margin-bottom: 1.25rem; line-height: 1.65; }
+        .read-more { color: #a78bfa; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.5px; text-transform: uppercase; display: inline-flex; align-items: center; gap: 0.4rem; transition: all 0.2s; }
+        .read-more:hover { color: #c4b5fd; gap: 0.6rem; }
 
-        /* CTA Banner */
-        .cta-banner { background: linear-gradient(135deg, #1a1a2e, #16213e); border: 1px solid #e74c3c; border-radius: 12px; padding: 3rem 2rem; text-align: center; max-width: 900px; margin: 3rem auto; }
-        .cta-banner h2 { color: #fff; font-size: 1.6rem; margin-bottom: 1rem; }
-        .cta-banner p { color: #bbb; margin-bottom: 1.5rem; max-width: 700px; margin-left: auto; margin-right: auto; margin-bottom: 1.5rem; }
+        /* Big CTA Banner */
+        .big-cta { padding: 6rem 2rem; background: linear-gradient(180deg, #0a0a0a 0%, #111 30%, #111 70%, #0a0a0a 100%); position: relative; text-align: center; overflow: hidden; }
+        .big-cta::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 50%, rgba(124,58,237,0.12) 0%, transparent 60%); }
+        .big-cta-inner { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; }
+        .big-cta h2 { font-size: 3.2rem; color: #fff; font-weight: 900; letter-spacing: -1px; margin-bottom: 1.25rem; line-height: 1.1; }
+        .big-cta p { color: #a1a1aa; font-size: 1.15rem; margin-bottom: 2.5rem; max-width: 550px; margin-left: auto; margin-right: auto; }
+        .big-cta .btn-primary { font-size: 1.25rem; padding: 1.15rem 3rem; animation: ctaPulse 3s ease-in-out infinite; }
+        @keyframes ctaPulse { 0%, 100% { box-shadow: 0 0 30px rgba(124,58,237,0.3), 0 4px 15px rgba(0,0,0,0.3); } 50% { box-shadow: 0 0 50px rgba(124,58,237,0.5), 0 4px 25px rgba(0,0,0,0.3); } }
+
+        /* Features row */
+        .features { padding: 4rem 2rem; max-width: 1000px; margin: 0 auto; }
+        .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+        .feature-item { text-align: center; padding: 2rem 1.5rem; background: linear-gradient(135deg, #18181b, #1c1c22); border: 1px solid #27272a; border-radius: 14px; transition: all 0.3s; }
+        .feature-item:hover { border-color: rgba(124,58,237,0.3); transform: translateY(-3px); }
+        .feature-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
+        .feature-item h3 { color: #fff; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .feature-item p { color: #71717a; font-size: 0.88rem; }
 
         /* Footer */
-        footer { text-align: center; padding: 2.5rem 2rem; border-top: 1px solid #222; color: #666; font-size: 0.9rem; }
-        footer a { color: #e74c3c; }
+        footer { text-align: center; padding: 3rem 2rem; border-top: 1px solid #1c1c1e; color: #52525b; font-size: 0.85rem; }
+        footer a { color: #7c3aed; font-weight: 500; }
+        footer a:hover { color: #a78bfa; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-toggle { display: block; }
+            .nav-links { display: none; flex-direction: column; position: absolute; top: 70px; left: 0; right: 0; background: rgba(10,10,10,0.98); padding: 1.5rem 2rem; gap: 1rem; border-bottom: 1px solid rgba(124,58,237,0.2); }
+            .nav-links.open { display: flex; }
+            .hero h1 { font-size: 2.4rem; }
+            .hero { padding: 5rem 1.5rem 4rem; }
+            .cta-section h2 { font-size: 2rem; }
+            .big-cta h2 { font-size: 2.2rem; }
+            .big-cta .btn-primary { font-size: 1.05rem; padding: 1rem 2rem; }
+            .stats-inner { grid-template-columns: 1fr; gap: 1.5rem; }
+            .features-grid { grid-template-columns: 1fr; }
+            .grid { grid-template-columns: 1fr; }
+            .section-header h2 { font-size: 1.8rem; }
+        }
     </style>
 </head>
 <body>
 
 <nav>
     <div class="logo">Movie<span>Trailer</span>Makers</div>
-    <ul>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle menu">&#9776;</button>
+    <ul class="nav-links">
         <li><a href="/">Home</a></li>
         <li><a href="#articles">Articles</a></li>
-        <li><a href="https://www.octanemultimedia.com/submit-a-film/">Submit a Film</a></li>
+        <li><a href="https://www.octanemultimedia.com/submit-a-film/" class="nav-cta">Submit Your Film</a></li>
     </ul>
 </nav>
 
 <section class="hero">
-    <h1>Market Your Film <span>Like a Pro</span></h1>
-    <p>Resources for filmmakers looking to create compelling trailers and marketing materials that attract distributors and audiences.</p>
-    <a href="https://www.octanemultimedia.com/submit-a-film/" class="btn">Submit Your Film Today</a>
+    <div class="hero-content">
+        <div class="hero-tag">Film Marketing Resources</div>
+        <h1>Make Your Film <span class="highlight">Impossible to Ignore</span></h1>
+        <p>Killer trailers. Strategic marketing. Real distribution. Everything you need to cut through the noise and get your film in front of the right audiences.</p>
+        <div class="hero-buttons">
+            <a href="https://www.octanemultimedia.com/submit-a-film/" class="btn-primary">Ready to Launch Your Film?</a>
+            <a href="#articles" class="btn-outline">Read Our Guides</a>
+        </div>
+    </div>
+</section>
+
+<div class="stats-bar">
+    <div class="stats-inner">
+        <div class="stat-item">
+            <div class="stat-num">100+</div>
+            <div class="stat-label">Platforms Worldwide</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-num">1000s</div>
+            <div class="stat-label">Films Distributed</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-num">24/7</div>
+            <div class="stat-label">Global Availability</div>
+        </div>
+    </div>
+</div>
+
+<section class="cta-section has-bg">
+    <div class="cta-divider"></div>
+    <h2>Your Film Deserves <span class="highlight">an Audience</span></h2>
+    <p>Stop waiting for distributors to find you. Take control of your film's future with a distribution partner that delivers real results.</p>
+    <a href="https://www.octanemultimedia.com/submit-a-film/" class="btn-primary">Submit Your Film</a>
+</section>
+
+<section class="features">
+    <div class="features-grid">
+        <div class="feature-item">
+            <span class="feature-icon">&#127916;</span>
+            <h3>Trailer Strategy</h3>
+            <p>Learn to craft trailers that hook audiences and convince distributors your film is worth investing in.</p>
+        </div>
+        <div class="feature-item">
+            <span class="feature-icon">&#128640;</span>
+            <h3>Distribution Tactics</h3>
+            <p>Navigate the distribution landscape with guides covering streaming, theatrical, and international markets.</p>
+        </div>
+        <div class="feature-item">
+            <span class="feature-icon">&#127775;</span>
+            <h3>Marketing Playbook</h3>
+            <p>Build a marketing plan that generates buzz and positions your film for maximum reach and revenue.</p>
+        </div>
+    </div>
 </section>
 
 <section class="section" id="articles">
-    <h2>Latest Articles</h2>
+    <div class="section-header">
+        <h2>Essential Guides for Filmmakers</h2>
+        <p>Deep-dive articles on distribution, marketing, and getting your film seen</p>
+    </div>
     <div class="grid">
 
         <div class="card">
+            <div class="card-number">Guide 01</div>
             <h3><a href="blog/sell-your-movie-to-distributors.html">How to Sell Your Movie to Distributors: A Practical Roadmap</a></h3>
             <p>Want to sell your movie to distributors? This guide walks you through the process from preparing your film to closing a deal with the right distribution partner.</p>
             <a href="blog/sell-your-movie-to-distributors.html" class="read-more">Read More &rarr;</a>
         </div>
 
         <div class="card">
+            <div class="card-number">Guide 02</div>
             <h3><a href="blog/what-distributors-look-for-in-indie-film.html">What Distributors Look For in an Indie Film</a></h3>
             <p>Learn the key factors that determine whether a distributor will acquire your project, from production quality and genre to marketability and deliverables.</p>
             <a href="blog/what-distributors-look-for-in-indie-film.html" class="read-more">Read More &rarr;</a>
         </div>
 
         <div class="card">
+            <div class="card-number">Guide 03</div>
             <h3><a href="blog/how-much-do-indie-films-make-from-distribution.html">How Much Do Indie Films Make From Distribution?</a></h3>
             <p>Get a realistic breakdown of indie film revenue across streaming, AVOD, TVOD, and international sales, plus tips for maximizing your earnings.</p>
             <a href="blog/how-much-do-indie-films-make-from-distribution.html" class="read-more">Read More &rarr;</a>
         </div>
 
         <div class="card">
+            <div class="card-number">Guide 04</div>
             <h3><a href="blog/how-to-pitch-your-film-to-distributors.html">How to Pitch Your Film to Distributors</a></h3>
             <p>Learn how to pitch your film to distributors with a compelling presentation that gets results. Practical tips for independent filmmakers seeking distribution deals.</p>
             <a href="blog/how-to-pitch-your-film-to-distributors.html" class="read-more">Read More &rarr;</a>
         </div>
 
         <div class="card">
+            <div class="card-number">Guide 05</div>
             <h3><a href="blog/film-festival-to-distribution-pipeline.html">Film Festival to Distribution: Building the Pipeline</a></h3>
             <p>Learn how to turn film festival screenings into real distribution deals. A practical guide to the film festival to distribution pipeline for independent filmmakers.</p>
             <a href="blog/film-festival-to-distribution-pipeline.html" class="read-more">Read More &rarr;</a>
@@ -108,16 +232,23 @@
     </div>
 </section>
 
-<section class="section">
-    <div class="cta-banner">
-        <h2>Ready to Distribute Your Film?</h2>
+<section class="cta-section">
+    <div class="cta-divider"></div>
+    <h2>Don't Let Your Film <span class="highlight">Collect Dust</span></h2>
+    <p>Filmmakers who take action get distribution deals. The ones who wait get forgotten. Which one are you?</p>
+    <a href="https://www.octanemultimedia.com/submit-a-film/" class="btn-primary">Get Started Now</a>
+</section>
+
+<section class="big-cta">
+    <div class="big-cta-inner">
+        <h2>Ready to Launch Your Film?</h2>
         <p>Octane Multimedia places indie films on Netflix, Hulu, Disney Channel, DirecTV, Redbox, and 100+ platforms worldwide.</p>
-        <a href="https://www.octanemultimedia.com/submit-a-film/" class="btn">Get Started Now</a>
+        <a href="https://www.octanemultimedia.com/submit-a-film/" class="btn-primary">Submit Your Film</a>
     </div>
 </section>
 
 <footer>
-    &copy; 2026 MovieTrailerMakers.com | A resource by <a href="https://www.octanemultimedia.com/">Octane Multimedia</a>
+    &copy; 2026 MovieTrailerMakers.com | A resource by <a href="https://www.octanemultimedia.com">Octane Multimedia</a>
 </footer>
 
 </body>
